@@ -85,7 +85,7 @@ Used to easily link Data updates to form inputs
 
 	 Constructor:
 
-	 *   new Interface(input, format_func, Data)
+	 *   new Interface(input, format_func, Data, init)
 
 	     where "input" is a reference to the input element interface, and 
 
@@ -100,3 +100,21 @@ Used to easily link Data updates to form inputs
 	     event of this.input value change. format_func may modify input value.
 
 	 *   Interface.detach(Data) = detaches the Data object.
+
+
+Usage/Examples
+==============
+
+var currentMerchantData = new DVI.data(mp.getmerch, [5]);
+
+// where "5" is the merchant_id and mp.getmerch is the AJAX function to get merchant data found in moola.js
+
+var merchantNameView = new DVI.view('merchantName', function(data) {
+
+	$('#merchant-name').html(data.name);
+	
+}, currentMerchantData);
+
+var merchantSelect = new DVI.interface( $('select#set-merchant'), currentMerchantData);
+
+// Now, selecting a new merchant in the select field with an ID of 'set-merchant' will cause the Data object to reload with the new value for the merchant_id and update the view showing the merchant name.
