@@ -105,16 +105,16 @@ Used to easily link Data updates to form inputs
 Usage/Examples
 ==============
 
-var currentMerchantData = new DVI.data(mp.getmerch, [5]);
+	var currentMerchantData = new DVI.data(mp.getmerch, [5]);
 
-// where "5" is the merchant_id and mp.getmerch is the AJAX function to get merchant data found in moola.js
+	// where "5" is the merchant_id and mp.getmerch is the AJAX function to get merchant data found in moola.js
 
-var merchantNameView = new DVI.view('merchantName', function(data) {
+	var merchantNameView = new DVI.view('merchantName', function(data) {
 
-	$('#merchant-name').html(data.name);
+		$('#merchant-name').html(data.name);
 	
-}, currentMerchantData);
+	}, currentMerchantData);
 
-var merchantSelect = new DVI.interface( $('select#set-merchant'), currentMerchantData);
+	var merchantSelect = new DVI.interface( $('select#set-merchant'), currentMerchantData);
 
-// Now, selecting a new merchant in the select field with an ID of 'set-merchant' will cause the Data object to reload with the new value for the merchant_id and update the view showing the merchant name.
+	// Now, selecting a new merchant in the select field with an ID of 'set-merchant' will cause the Data object to reload with the new value for the merchant_id and update the view showing the merchant name.
