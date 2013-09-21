@@ -155,7 +155,7 @@ So to create a custom backend communication function you'd write:
 Now to use the custom function, you'd create the DVI data object with the appropriate argument:
 	
 	// create the DVI data object
-	var dviDataObj = new DVI.data(customCallback, 'foo');
+	var dviDataObj = new DVI.data(customCallback, ['foo']);
 	
 Now calling get() on the DVI data object returns the expected backend response:
 	
