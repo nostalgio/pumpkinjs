@@ -1,6 +1,9 @@
 data_view_interface
 ===================
 
+### Current Build Status from Travis-CI
+[![Build Status](https://travis-ci.org/forforf/data_view_interface.png)](https://travis-ci.org/forforf/data_view_interface)
+
 A simple JavaScript tool to make requesting, displaying, caching, and changing Backend data easier for web apps.
 
 Broken into 3 parts:
