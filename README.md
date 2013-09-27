@@ -1,6 +1,9 @@
 data_view_interface
 ===================
 
+### Current Build Status from Travis-CI
+[![Build Status](https://travis-ci.org/forforf/data_view_interface.png)](https://travis-ci.org/forforf/data_view_interface)
+
 A simple JavaScript tool to make requesting, displaying, caching, and changing Backend data easier for web apps.
 
 Broken into 3 parts:
@@ -105,6 +108,9 @@ Used to easily link Data updates to form inputs
 Usage/Examples
 ==============
 
+Short and sweet
+---------------
+
 	var currentMerchantData = new DVI.data(mp.getmerch, [5]);
 
 	// where "5" is the merchant_id and mp.getmerch is the AJAX function to get merchant data found in moola.js
@@ -118,3 +124,43 @@ Usage/Examples
 	var merchantSelect = new DVI.interface( $('select#set-merchant'), currentMerchantData);
 
 	// Now, selecting a new merchant in the select field with an ID of 'set-merchant' will cause the Data object to reload with the new value for the merchant_id and update the view showing the merchant name.
+	
+
+Using a custom backend communication function
+---------------------------------------------
+
+An example backend provider. It provides a value of either "FOO" or "BAR".
+
+	var backendCommunicator = {
+		foo: "FOO",
+		bar: "BAR
+	}
+
+
+The arguments intended for the backend communicator are provided as arguments of the DVI.data constructor
+For example: 
+
+	new DVI.data(customCallback, arg1, arg2, etc ...)
+
+These arguments are passed on to the callback function: set_func.
+
+So to create a custom backend communication function you'd write:
+
+	var customCallback = function( arg, responseFn ){
+		
+		//backendCommunicator value to return (which depends on arg)
+		var responseValue = backendCommunicator[arg]
+		
+		//call the responseFn with the value to return
+		responseFn( responseValue );
+	}
+	
+Now to use the custom function, you'd create the DVI data object with the appropriate argument:
+	
+	// create the DVI data object
+	var dviDataObj = new DVI.data(customCallback, ['foo']);
+	
+Now calling get() on the DVI data object returns the expected backend response:
+	
+	dviDataObj.get();  //=> "FOO"
+	
