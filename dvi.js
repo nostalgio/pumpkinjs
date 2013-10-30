@@ -237,9 +237,16 @@ var DVI  = ( function() {
 			this.format = format_func || this.format_func;
 			init = init || false;
 			var _this = this;
-			this.handler = function() { Data.change(null, _this.value()); };
+			this.handler = function() {
+				// Make sure value is an array
+				var value = _this.value();
+				if (value instanceof Array)
+					Data.change(null, value);
+				else
+					Data.change(null, [value]);
+			};
 			// Use jQuery if available
-			if ($ !== undefined && $.fn.change !== undefined) {
+			if (typeof $ !== "undefined" && typeof $.fn.change !== "function") {
 				$(this.input).bind("change."+this.id, function() {
 					var value = null;
 					var type = $(this).prop('type');
@@ -276,7 +283,7 @@ var DVI  = ( function() {
 
 		detach: function(Data) {
 			// Use jQuery if available
-			if ($ !== undefined && $.fn.change !== undefined) {
+			if (typeof $ !== "undefined" && typeof $.fn.change !== "function") {
 				$(this.input).unbind("change."+this.id);
 			} else {
 				// Cross browser remove event function
