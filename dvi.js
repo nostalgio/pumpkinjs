@@ -76,7 +76,7 @@ var DVI  = ( function() {
 
 		update: function(callback) {
 			this.current = 'pending';
-			if (callback)
+			if (callback && typeof callback == "function")
 				this.callback.push(callback);
 
 			this.set();
@@ -179,12 +179,12 @@ var DVI  = ( function() {
 		},
 
 		detach: function() {
-			this.Data = {};
 			try {
-				Data.removeView(this.name);
+				this.Data.removeView(this.name);
 			} catch(e) {
 				console.log("Error detaching Data object: " + e.message);
 			}
+			this.Data = {};
 		},
 
 		load: function(data, callback) {
@@ -193,16 +193,7 @@ var DVI  = ( function() {
 				if (typeof callback == "function")
 					callback(data);
 			} else if (this.Data !== undefined && this.Data.update !== undefined) {
-          this.Data.update( function(data) {
-              if (this.update instanceof Function){
-                  this.update(data);
-                  if (typeof callback == "function")
-                      callback(data);
-              } else {
-                  //what to do if callback is not a function and it has no update method?
-              }
-
-          });
+				this.Data.update(callback);
 			} else {
 				console.log("Error updating " + this.name + " view. No Data.");
 			}
