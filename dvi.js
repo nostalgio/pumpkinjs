@@ -1,4 +1,4 @@
-/* This is the Data View Interface library
+/* This is the Data View Interact library
  * Created to simplify MP activity
 */
 var DVI  = ( function() {
@@ -204,19 +204,19 @@ var DVI  = ( function() {
 		}
 	};
 
-	/* Interface prototype
+	/* Interact prototype
 	 * Used to easily link Data updates to form inputs
 	 * Constructor:
-	 *   new Interface(input, format_func, Data, init)
+	 *   new Interact(input, format_func, Data, init)
 	 *   where "input" is a reference to the input element interface, and 
 	 *   "format_func" is optional and may be used to process the raw value
 	 *   of the input element.
 	 * Interface:
-	 *   Interface.attach(Data, format_func) = attaches a Data object to change in the
+	 *   Interact.attach(Data, format_func) = attaches a Data object to change in the
 	 *   event of this.input value change. format_func may modify input value.
-	 *   Interface.detach(Data) = detaches the Data object.
+	 *   Interact.detach(Data) = detaches the Data object.
 	*/
-	var Interface = function(input, Data, format_func, init) {
+	var Interact = function(input, Data, format_func, init) {
 		this.id = "dvi_"+(new Date().getTime());
 		this.input = input;
 		this.Data = {};
@@ -232,7 +232,7 @@ var DVI  = ( function() {
 		}
 	};
 
-	Interface.prototype = {
+	Interact.prototype = {
 		attach: function(Data, format_func, init) {
 			this.format = format_func || this.format_func;
 			init = init || false;
@@ -376,6 +376,6 @@ var DVI  = ( function() {
 	return {
 		data: Data,
 		view: View,
-		interface: Interface
+		interact: Interact
 	};
 })();

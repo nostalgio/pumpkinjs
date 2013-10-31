@@ -1,4 +1,4 @@
-data_view_interface
+data_view_interact
 ===================
 
 ### Current Build Status from Travis-CI
@@ -12,7 +12,7 @@ Broken into 3 parts:
 
 2. View (holds a function to update the UI using a Data object)
  
-3. Interface (completely optional, but may connect a user input event to a command to change or update a Data object)
+3. Interact (completely optional, but may connect a user input event to a command to change or update a Data object)
 
 Data
 ====
@@ -81,14 +81,14 @@ Used to create objects to update UI
 
 
 
-Interface
+Interact
 =========
 
 Used to easily link Data updates to form inputs
 
 	 Constructor:
 
-	 *   new Interface(input, format_func, Data, init)
+	 *   new Interact(input, format_func, Data, init)
 
 	     where "input" is a reference to the input element interface, and 
 
@@ -98,11 +98,11 @@ Used to easily link Data updates to form inputs
 
 	 Interface:
 
-	 *   Interface.attach(Data, format_func) = attaches a Data object to change in the
+	 *   Interact.attach(Data, format_func) = attaches a Data object to change in the
 
 	     event of this.input value change. format_func may modify input value.
 
-	 *   Interface.detach(Data) = detaches the Data object.
+	 *   Interact.detach(Data) = detaches the Data object.
 
 
 Usage/Examples
@@ -121,7 +121,7 @@ Short and sweet
 	
 	}, currentMerchantData);
 
-	var merchantSelect = new DVI.interface( $('select#set-merchant'), currentMerchantData);
+	var merchantSelect = new DVI.interact( $('select#set-merchant'), currentMerchantData);
 
 	// Now, selecting a new merchant in the select field with an ID of 'set-merchant' will cause the Data object to reload with the new value for the merchant_id and update the view showing the merchant name.
 	
