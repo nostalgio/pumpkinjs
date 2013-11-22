@@ -76,7 +76,7 @@ var DVI  = ( function() {
 
 		update: function(callback) {
 			this.current = 'pending';
-			if (callback && typeof callback == "function")
+			if (callback && typeof callback === "function")
 				this.callback.push(callback);
 
 			this.set();
@@ -190,7 +190,7 @@ var DVI  = ( function() {
 		load: function(data, callback) {
 			if (data !== undefined && data !== null) {
 				this.update(data);
-				if (typeof callback == "function")
+				if (typeof callback === "function")
 					callback(data);
 			} else if (this.Data !== undefined && this.Data.update !== undefined) {
 				this.Data.update(callback);
@@ -246,7 +246,7 @@ var DVI  = ( function() {
 					Data.change(null, [value]);
 			};
 			// Use jQuery if available
-			if (typeof $ !== "undefined" && typeof $.fn.change !== "function") {
+			if (typeof $ !== "undefined" && typeof $.fn.change === "function") {
 				$(this.input).bind("change."+this.id, function() {
 					var value = null;
 					var type = $(this).prop('type');
@@ -263,9 +263,10 @@ var DVI  = ( function() {
 				if (init == true)
 					$(this.input).trigger("change."+this.id);
 			} else {
+				console.log('DVI: jQuery not found.');
 				// Cross browser add event function
 				function addEvent(node, event, handler) {
-					if (typeof node.addEventListener == "function")
+					if (typeof node.addEventListener === "function")
 						node.addEventListener(event, handler, false);
 					else
 						node.attachEvent("on"+event, handler);
@@ -283,12 +284,12 @@ var DVI  = ( function() {
 
 		detach: function(Data) {
 			// Use jQuery if available
-			if (typeof $ !== "undefined" && typeof $.fn.change !== "function") {
+			if (typeof $ !== "undefined" && typeof $.fn.change === "function") {
 				$(this.input).unbind("change."+this.id);
 			} else {
 				// Cross browser remove event function
 				function removeEvent(node, event, handler) {
-					if (typeof node.removeEventListener == "function")
+					if (typeof node.removeEventListener === "function")
 						node.removeEventListener(event, handler, false);
 					else
 						node.detachEvent("on"+event, handler);
