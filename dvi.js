@@ -122,14 +122,6 @@ var DVI  = ( function() {
 
 		loadCallback: function() {
 			if (this.current == 'yes') {
-				for (var i = 0; i < this.callback.length; i++) {
-					try {
-						this.callback[i](this.data);
-					} catch(e) {
-						console.log("Error with callback function: " + e.message);
-					}
-				}
-				this.callback = [];
 				for (var view in this.views) {
 					if (this.views.hasOwnProperty(view)) {
 						try {
@@ -139,6 +131,14 @@ var DVI  = ( function() {
 						}
 					}
 				}
+				for (var i = 0; i < this.callback.length; i++) {
+					try {
+						this.callback[i](this.data);
+					} catch(e) {
+						console.log("Error with callback function: " + e.message);
+					}
+				}
+				this.callback = [];
 			} else {
 				console.log("Error updating data: " + self.data);
 			}
