@@ -23,10 +23,11 @@ var DVI  = ( function() {
 	/* Data prototype
 	 * Used to create the data holding objects:
 	 * Constructor:
-	 *   new Data(set_func, args)
+	 *   new Data(set_func, args, data)
 	 *   where "set_func" is the backend communication function, and "args"
 	 *   are any necessary arguments for the set_func function.
 	 *   Note: "set_func" could be any function to set the data.
+	 *   The optional "data" argument may contain data to load into the object.
 	 * Interface:
 	 * 	 Data.data = gives direct access to the data object or array
 	 *   Data.get(callback) = returns callback with stored data or data retreived from backend
@@ -38,13 +39,18 @@ var DVI  = ( function() {
 	 *   Data.removeView(name) = removes an attached view by name
 	 *   Data.clearViews = removes all attached views
 	*/
-	var Data = function(set_func, args) {
-		this.data = {};
+	var Data = function(set_func, args, data) {
+		if (data !== undefined && data !== null) {
+			this.data = data;
+			this.current = 'yes';
+		} else {
+			this.data = {};
+			this.current = 'no';
+		}
 		this.set_func = set_func;
 		this.args = (args || []);
 		this.callback = [];
 		this.views = {};
-		this.current = 'no';
 	};
 
 	Data.prototype = {
