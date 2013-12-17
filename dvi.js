@@ -32,6 +32,7 @@ var DVI  = ( function() {
 	 * 	 Data.data = gives direct access to the data object or array
 	 *   Data.get(callback) = returns callback with stored data or data retreived from backend
 	 *   Data.update(callback) = force updates data stored in object or array. Offers callback
+	 *   Data.silentUpdate() = updates the data without updating any views
 	 *   Data.change(set_fun, args) = a method to change the Data object set function and arguments
 	 *   Data.current = a property used to check status of data 'yes', 'no', 'pending'
 	 *   Data.addView(name, updateView) = a method to attach function to update a view when data loads
@@ -54,7 +55,7 @@ var DVI  = ( function() {
 	};
 
 	Data.prototype = {
-		set: function() {
+		set: function(type) {
 			try {
 				var self = this;
 				// Call setCallback after retreiving data
@@ -65,7 +66,8 @@ var DVI  = ( function() {
 					} else {
 						throw new Error("No response from server.");
 					}
-					self.loadCallback();
+					if (type !== 'silent')
+						self.loadCallback();
 				}
 				// Push the callback function into arguments array
 				var arguments = [];
@@ -86,6 +88,12 @@ var DVI  = ( function() {
 				this.callback.push(callback);
 
 			this.set();
+		},
+
+		silentUpdate: function() {
+			this.current = 'pending';
+
+			this.set('silent');
 		},
 
 		get: function(callback) {
