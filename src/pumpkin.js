@@ -4,6 +4,22 @@
  * To add Signals/Slots capabilities to Backbone.js
 */
 
+class PumpkinEvent {
+    constructor() {
+        this.callbacks = [];
+    }
+
+    add(callbackObject) {
+        let index = this.callbacks.push(callbackObject) - 1;
+        return index;
+    }
+
+    squash(index) {
+        delete this.callbacks[index];
+    }
+}
+
+
 class Pumpkin {
     constructor(namespace = 'PumpkinPatch') {
         this.setupProperties(namespace);
@@ -37,9 +53,7 @@ class Pumpkin {
     getOrCreateEvent(eventName) {
         let event = this.getEvent(eventName);
         if (event === null) {
-            event = this.vine[eventName] = {
-                callbacks: []
-            };
+            event = this.vine[eventName] = new PumpkinEvent();
         }
         return event;
     }
@@ -54,18 +68,29 @@ class Pumpkin {
     slot(eventName, callback, scope = this.patch) {
         let event = this.getOrCreateEvent(eventName);
 
-        if (eventName && typeof callback === "function") {
-            event.callbacks.push({
+        if (eventName && typeof callback === 'function') {
+            let index = event.add({
                 crust: scope,
                 recipe: callback
             });
+            return index;
+        } else {
+            return null;
         }
     }
 
     makePie(callbacks, ingredients) {
         callbacks.forEach( (callback) => {
-            callback.recipe.call(callback.crust, ingredients);
+            if (typeof callback.recipe === 'function') {
+                callback.recipe.call(callback.crust, ingredients);
+            }
         });
+    }
+
+    squash(eventName) {
+        if (eventName && this.getEvent(eventName) !== null) {
+            delete this.vine[eventName];
+        }
     }
 }
 
