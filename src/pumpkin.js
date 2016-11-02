@@ -20,7 +20,7 @@ class PumpkinEvent {
 }
 
 
-class Pumpkin {
+export class Pumpkin {
     constructor(namespace = 'PumpkinPatch') {
         this.setupProperties(namespace);
     }
@@ -93,5 +93,3 @@ class Pumpkin {
         }
     }
 }
-
-export { Pumpkin };
